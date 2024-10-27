@@ -8,7 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        signup: "url('./src/assets/images/hero_bg.png')"
+      },
       colors: {
+        primary: "#006ef7",
+        secondry: "#dbebff",
+        grey: "#6c6c6c",
+        text: "#3c3c3c",
+        green: "#00d59d",
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
