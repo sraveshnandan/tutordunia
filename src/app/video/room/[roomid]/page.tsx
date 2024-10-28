@@ -8,7 +8,7 @@ const Room = ({ params }: { params: { roomid: string } }) => {
     const { fullName } = useTestUser();
     const roomID = params.roomid;
 
-    let myMeeting: any = async (element: any) => {
+    const myMeeting: any = async (element: any) => {
         // generate Kit Token
         const appID = parseInt(process.env.NEXT_PUBLIC_ZEGO_CLOUD_APP_ID!);
         const serverSecret = process.env.NEXT_PUBLIC_ZEGO_CLOUD_SERVER_SECRET!;

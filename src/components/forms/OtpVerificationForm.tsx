@@ -14,7 +14,7 @@ interface OTPVerificationProps {
     verification_id: number,
     setOtpVerified: Dispatch<SetStateAction<boolean>>;
     otpVerified: boolean;
-    payload: Object
+    payload: object
 }
 
 const OtpVerificationForm: FC<OTPVerificationProps> = ({ phone_number, setLoading, verification_id, setOtpVerified, otpVerified, payload }) => {
@@ -46,7 +46,8 @@ const OtpVerificationForm: FC<OTPVerificationProps> = ({ phone_number, setLoadin
         setLoading(true)
         try {
             const formatedOtp = Number(otp.join(""));
-            const verify_res = await VerifyOtpToMobile(Number(phone_number), formatedOtp, verification_id);
+            const number = Number(phone_number)
+            const verify_res = await VerifyOtpToMobile(number, formatedOtp, verification_id);
             if (verify_res.success) {
                 toast.success("Otp Verified successfully.");
                 setOtpVerified(true)
