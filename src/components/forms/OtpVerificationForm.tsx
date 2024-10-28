@@ -6,6 +6,7 @@ import { RegisterUser, VerifyOtpToMobile } from '@/services/auth.services';
 import toast from 'react-hot-toast';
 import { EyeClosed, EyeIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@/state/zustand/useUser';
 
 interface OTPVerificationProps {
     phone_number: string,
@@ -18,7 +19,8 @@ interface OTPVerificationProps {
 
 const OtpVerificationForm: FC<OTPVerificationProps> = ({ phone_number, setLoading, verification_id, setOtpVerified, otpVerified, payload }) => {
 
-    const router = useRouter()
+    const router = useRouter();
+    const { setUser, setAccessToken, setRefreshToken } = useUser()
     const [otp, setOtp] = useState(['', '', '', '']);
     const [password, setpassword] = useState<string>("");
     const [confirmPassword, setconfirmPassword] = useState<string>("");
@@ -72,11 +74,10 @@ const OtpVerificationForm: FC<OTPVerificationProps> = ({ phone_number, setLoadin
                 return toast.error("Unable to create new account.")
             }
             const newUser = createAccountRes?.user;
-            const { access_token, refresh_token } = createAccountRes;
-            console.log("account creted", createAccountRes);
-            window.localStorage.setItem("user", newUser);
-            window.localStorage.setItem("access_token", access_token);
-            window.localStorage.setItem("refresh_token", refresh_token);
+            const { user, access_token, refresh_token } = createAccountRes;
+            setUser(user);
+            setAccessToken(access_token);
+            setRefreshToken(refresh_token)
             router.replace("/dashboard");
         } catch (error) {
             return toast.error("Something went wrong.")
@@ -84,8 +85,6 @@ const OtpVerificationForm: FC<OTPVerificationProps> = ({ phone_number, setLoadin
             setLoading(false)
         }
     }
-
-    console.log(payload)
     return (
         <div className='bg-white flex flex-col w-full p-2 z-10'>
             <span className='text-center text-2xl text-text font-semibold'>Verify your Phone Number</span>
@@ -129,9 +128,14 @@ const OtpVerificationForm: FC<OTPVerificationProps> = ({ phone_number, setLoadin
                         </div>
 
 
-                    ) : <OtpInput sendOTp={setOtp} />}
+                    ) : (
+                        <div className='w-full items-center flex flex-col'>
+                            <label htmlFor="" className='text-text mb-2'>Enter OTP</label>
+                            <OtpInput sendOTp={setOtp} />
+                        </div>
+                    )}
                 </div>
-                <button type='submit' className={`w-fit ${otpVerified ? "bg-green-600" : "bg-primary"} px-4 py-2 my-4 self-center text-white mx-auto rounded-md`}>{otpVerified ? "Create Account" : "Verify"}</button>
+                <button type='submit' className={`w-fit ${otpVerified ? "bg-green" : "bg-primary"} px-4 py-2 my-4 self-center text-white mx-auto rounded-md`}>{otpVerified ? "Create Account" : "Verify"}</button>
             </form>
             <span className='text-sm font-medium my-4 text-center'>By Signing up, you agree to our <Link className='text-primary underline' href={"/terms-of-use"}>Terms of Use</Link> and <Link className='text-primary underline' href={"/privacy-policy"}>Privacy Policy</Link></span>
         </div>

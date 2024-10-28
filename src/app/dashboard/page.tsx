@@ -1,5 +1,4 @@
 "use client"
-
 import { useUser } from "@/state/zustand/useUser"
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -14,7 +13,7 @@ const DashBoardPage = () => {
     }, [])
     return (
         <div className="w-full">
-            
+
         </div>
     )
 }

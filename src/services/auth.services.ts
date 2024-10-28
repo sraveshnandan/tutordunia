@@ -31,9 +31,13 @@ export const RegisterUser = async (payload: any) => {
 }
 
 
-export const FetchUserProfile = async () => {
+export const FetchUserProfile = async (token: string) => {
     try {
-        const res = await AppAxios.get("/user/profile");
+        const res = await api.get("/user/profile", {
+            headers: {
+                token
+            }
+        });
         return res.data
     } catch (error: any) {
         console.log("fetch profile err", JSON.stringify(error));

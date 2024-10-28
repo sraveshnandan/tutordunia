@@ -7,18 +7,11 @@ const api = axios.create({
 
 
 const AppAxios = axios.create({
-    baseURL: "http://127.0.0.1:5000/api/v1"
+    baseURL: "https://modern-maiga-durgesh0-ab1f7c3e.koyeb.app/api/v1"
 })
 
 
 
-AppAxios.interceptors.request.use(async config => {
-    const accessToken = window.localStorage.getString("access_token");
-    if (accessToken) {
-        config.headers.token = `${accessToken}`
-    }
-    return config
-});
 
 
 
