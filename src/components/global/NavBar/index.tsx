@@ -9,7 +9,7 @@ const NavBar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const path = usePathname()
     useEffect(() => {
-        setIsMenuOpen(prev => !prev)
+        setIsMenuOpen(false)
     }, [path])
     return (
         <>
