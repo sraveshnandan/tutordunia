@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link'
 import React, { FC } from 'react'
 
-const Avatar: FC<{ user?: Record<string, any> }> = ({ user }) => {
+const Avatard: FC<{ user?: Record<string, any> }> = ({ user }) => {
     const col = getRandomRgbColor();
     return (
         <Link href={"/dashboard"} style={{ backgroundColor: col }} className={`w-10 p-1  items-center justify-center border-[1px] h-10 rounded-full  flex`}>
@@ -17,4 +17,4 @@ const Avatar: FC<{ user?: Record<string, any> }> = ({ user }) => {
     )
 }
 
-export default Avatar
+export default Avatard

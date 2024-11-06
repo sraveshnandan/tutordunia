@@ -1,65 +1,64 @@
-"use client"
-import { useState } from 'react';
+"use client";
+import { useState, Suspense } from 'react';
 import AccountType from './AccountType';
-import { Loader, OtpVerificationForm, StudentSignUpForm } from '@/components';
+import { Loader, OtpVerificationForm, StudentSignUpForm, TutorRegistrationForm } from '@/components';
 import { SendOtpToMobile } from '@/services/auth.services';
 import toast from 'react-hot-toast';
 
 const SignUpPage = () => {
-
     const [mode, setMode] = useState<string | null>(null);
-    const [otpVerified, setotpVerified] = useState<boolean>(false);
-    const [loading, setloading] = useState<boolean>(false);
-    const [step, setstep] = useState<number>(0);
+    const [otpVerified, setOtpVerified] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [step, setStep] = useState<number>(0);
     const [payload, setPayload] = useState({
         full_name: "",
         email: "",
         phone_number: ""
     });
-    const [verificationId, setVerificationId] = useState<string>("")
+    const [verificationId, setVerificationId] = useState<string>("");
 
-    // form submit action 
-    const handelFormSubmit = async (data: any) => {
+    const handleFormSubmit = async (data: any) => {
+        setLoading(true);
         setPayload(data);
-        console.log(payload)
         try {
-            const phone = Number(data.phone_number)
-            //    sending otp to phone number 
-            try {
-                const otpRes = await SendOtpToMobile(phone);
-                setVerificationId(otpRes?.data?.verificationId);
-                setPayload(data)
-                setstep(1);
-                console.log("payload", payload)
-            } catch (error) {
-                return toast.error("Unable to send Otp.")
-            }
-
+            const phone = Number(data.phone_number);
+            const otpRes = await SendOtpToMobile(phone);
+            setVerificationId(otpRes?.data?.verificationId);
+            setStep(1);
         } catch (error) {
-            return toast.error("Something went wrong.")
-        } finally { setloading(false); }
+            toast.error("Unable to send OTP.");
+        } finally {
+            setLoading(false);
+        }
     };
 
-   
-
     return (
-        <div className='w-full h-[100dvh] flex items-center justify-center'>
-            {loading && <Loader />}
-            {!mode ? (
-                <AccountType setmode={setMode} />
-            ) : mode === "teacher" ? (
-                <div className='bg-red-600 p-12 z-50'>
-                    <span>Sign Up as a Tutor</span>
-                </div>
-            ) : (
-                <div className='bg-white rounded-md shadow-md shadow-black/10 flex flex-col md:w-[50%] w-[90%] p-2 z-10'>
-                    {
-                        step === 0 ? <StudentSignUpForm onSubmit={handelFormSubmit} /> : <OtpVerificationForm otpVerified={otpVerified} setOtpVerified={setotpVerified} verification_id={Number(verificationId)} setLoading={setloading} phone_number={payload.phone_number} payload={payload} />
-                    }
-                </div>
-            )}
-        </div>
-    )
-}
+        <Suspense fallback={<Loader />}>
+            <div className='w-full h-[100dvh] flex items-center justify-center'>
+                {loading && <Loader />}
+                {!mode ? (
+                    <AccountType setmode={setMode} />
+                ) : mode === "teacher" ? (
+                    <div className='w-full'><TutorRegistrationForm setLoading={setLoading} /></div>
+                ) : (
+                    <div className='bg-white rounded-md shadow-md shadow-black/10 flex flex-col md:w-[50%] w-[90%] p-2 z-10'>
+                        {
+                            step === 0 ?
+                                <StudentSignUpForm onSubmit={handleFormSubmit} /> :
+                                <OtpVerificationForm
+                                    otpVerified={otpVerified}
+                                    setOtpVerified={setOtpVerified}
+                                    verification_id={Number(verificationId)}
+                                    setLoading={setLoading}
+                                    phone_number={payload.phone_number}
+                                    payload={payload}
+                                />
+                        }
+                    </div>
+                )}
+            </div>
+        </Suspense>
+    );
+};
 
 export default SignUpPage;

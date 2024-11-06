@@ -123,7 +123,17 @@ const Images = {
 }
 
 
+// Mock data for tutors
+const TutorsData = [
+    { id: 1, name: "Dr. Amit Kumar", subjects: ["Mathematics", "Physics"], classes: ["11", "12"], rating: 4.8 },
+    { id: 2, name: "Priya Sharma", subjects: ["Biology", "Chemistry"], classes: ["9", "10"], rating: 4.6 },
+    { id: 3, name: "Rajesh Gupta", subjects: ["English", "History"], classes: ["6", "7", "8"], rating: 4.7 },
+    { id: 4, name: "Sneha Patel", subjects: ["Computer Science"], classes: ["11", "12"], rating: 4.9 },
+    { id: 5, name: "Vikram Singh", subjects: ["Mathematics", "Science"], classes: ["8", "9", "10"], rating: 4.5 },
+    { id: 6, name: "Anita Desai", subjects: ["Hindi", "Sanskrit"], classes: ["6", "7", "8", "9"], rating: 4.4 },
+]
 
 
 
-export { NavMenu, Stats, DummyTutors, HowTOData, Reviews, Images }
+
+export { NavMenu, Stats, DummyTutors, HowTOData, Reviews, Images, TutorsData }

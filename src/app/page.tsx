@@ -1,34 +1,16 @@
-"use client"
-import { FeatureSection, HeroSection, HowToSection, ReviewsSection } from "@/components";
-import { AppAxios } from "@/services/api/config";
-import { FetchUserProfile } from "@/services/auth.services";
-import { useUser } from "@/state/zustand/useUser";
-import { useEffect } from "react";
+
+import { CategorySection, CommunitySection, FeatureSection, HeroSection, HowToSection, ReadyToStartSection, WhyChooseUsSection } from "@/components";
 
 export default function Home() {
-  const { access_token, setAccessToken, setRefreshToken, setUser } = useUser()
-  const fetchUser = async () => {
-    const pr = await AppAxios.get("/user/profile");
-    console.log(pr)
-    const data = await FetchUserProfile(access_token as any);
-    const { user, access_token: a_token, refresh_token } = data;
-    setAccessToken(a_token);
-    setRefreshToken(refresh_token);
-    setUser(user)
-  }
-
-  useEffect(() => {
-    if (access_token) {
-      fetchUser()
-    }
-  }, [access_token])
-
   return (
-    <>
+    <div className="flex flex-col w-full min-h-screen">
       <HeroSection />
+      <CategorySection />
+      <WhyChooseUsSection />
       <FeatureSection />
       <HowToSection />
-      <ReviewsSection />
-    </>
+      <CommunitySection />
+      <ReadyToStartSection />
+    </div>
   );
 }

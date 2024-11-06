@@ -1,27 +1,39 @@
 import Title from '@/components/ui/title'
 import { HowTOData } from '@/constants'
+import { Calendar, MessageCircle, Search, Star } from 'lucide-react'
 import React from 'react'
 
 const HowToSection = () => {
     return (
-        <div className='flex flex-col gap-4 my-12'>
-            <Title title='How Tutor Dunia Works?' />
-            <div className='w-full my-8 grid md:grid-cols-3 grid-cols-1 content-center'>
-                {HowTOData.map((item, index) => {
-                    const Icon = item.Icon
-                    return (
-                        <div className='flex gap-2 my-4 flex-col items-center justify-center' key={index}>
-                            <div className='w-20 h-20 bg-primary cursor-pointer shadow-md shadow-secondry hover:scale-110 duration-500 rounded-full flex items-center justify-center'> <Icon color='#fff' /></div>
-
-                            <span className='text-lg font-semibold'>{item.title}</span>
-                            <span className='text-sm font-semibold text-gray-400'>{item.desc}</span>
-                        </div>
-                    )
-                })}
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+          <div className="container px-4 md:px-6">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-24">
+              How It Works
+            </h2>
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="flex flex-col items-center space-y-2 text-center">
+                <Search className="h-12 w-12 text-indigo-600" />
+                <h3 className="text-xl font-bold">1. Find a Tutor</h3>
+                <p className="text-gray-500">Search our extensive database of qualified tutors.</p>
+              </div>
+              <div className="flex flex-col items-center space-y-2 text-center">
+                <Calendar className="h-12 w-12 text-indigo-600" />
+                <h3 className="text-xl font-bold">2. Book a Session</h3>
+                <p className="text-gray-500">Choose a time that fits your schedule.</p>
+              </div>
+              <div className="flex flex-col items-center space-y-2 text-center">
+                <MessageCircle className="h-12 w-12 text-indigo-600" />
+                <h3 className="text-xl font-bold">3. Start Learning</h3>
+                <p className="text-gray-500">Connect with your tutor via our online platform.</p>
+              </div>
+              <div className="flex flex-col items-center space-y-2 text-center">
+                <Star className="h-12 w-12 text-indigo-600" />
+                <h3 className="text-xl font-bold">4. Rate & Review</h3>
+                <p className="text-gray-500">Share your experience to help others.</p>
+              </div>
             </div>
-
-            <button className='bg-primary w-fit self-center px-5 py-3 rounded-md cursor-pointer text-white font-medium'>Get Started</button>
-        </div>
+          </div>
+        </section>
     )
 }
 

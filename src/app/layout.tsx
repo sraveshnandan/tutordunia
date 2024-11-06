@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`antialiased text-text bg-[#f7f7f7] max-w-[1024px] mx-auto`}
+        className={`antialiased text-text  max-w-[1024px] mx-auto`}
       >
         <NavBar />
         {children}
